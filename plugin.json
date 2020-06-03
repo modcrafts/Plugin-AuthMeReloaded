@@ -1,0 +1,14 @@
+{
+    "id": "authme",
+    "name": "AuthMe",
+    "description": "Plugin for Azuriom",
+    "version": "1.0.0",
+    "url": "https://azuriom.com",
+    "authors": [
+        "Azuriom"
+    ],
+    "providers": [
+        "\\Azuriom\\Plugin\\AuthMe\\Providers\\AuthMeServiceProvider",
+        "\\Azuriom\\Plugin\\AuthMe\\Providers\\RouteServiceProvider"
+    ]
+}
