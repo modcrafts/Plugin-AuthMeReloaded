@@ -23,8 +23,8 @@
                 mySQLColumnRegisterDate: authme_created_at <br>
                 mySQLtotpKey: google_2fa_secret <br>
                 mySQLColumnIp: last_login_ip <br>
-                mySQLColumnLastLogin: last_login_at <br>
-                mySQLColumnRegisterDate: created_at <br>
+                mySQLColumnLastLogin: authme_last_login_at <br>
+                mySQLColumnRegisterDate: authme_created_at <br>
                 mySQLColumnRegisterIp: authme_regip <br>
                 mySQLlastlocX: authme_x <br>
                 mySQLlastlocY: authme_y <br>
