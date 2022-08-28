@@ -1,10 +1,10 @@
 <?php
 
-namespace Azuriom\Plugin\AuthMe\Controllers;
+namespace Azuriom\Plugin\Authme\Controllers;
 
 use Azuriom\Http\Controllers\Controller;
 
-class AuthMeHomeController extends Controller
+class AuthmeHomeController extends Controller
 {
     /**
      * Show the home plugin page.

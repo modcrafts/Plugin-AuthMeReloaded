@@ -1,18 +1,22 @@
 <?php
 
-namespace Azuriom\Plugin\AuthMe\Providers;
+namespace Azuriom\Plugin\Authme\Providers;
 
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Auth\Events\Registered;
+use Azuriom\Plugin\Authme\Cards\AuthmeViewCard;
 
-class AuthMeServiceProvider extends BasePluginServiceProvider
+class AuthmeServiceProvider extends BasePluginServiceProvider
 {
     /**
      * The plugin's global HTTP middleware stack.
      *
      * @var array
      */
-    protected $middleware = [
-        // \Azuriom\Plugin\AuthMe\Middleware\ExampleMiddleware::class,
+    protected array $middleware = [
+        // \Azuriom\Plugin\Authme\Middleware\ExampleMiddleware::class,
     ];
 
     /**
@@ -20,15 +24,15 @@ class AuthMeServiceProvider extends BasePluginServiceProvider
      *
      * @var array
      */
-    protected $middlewareGroups = [];
+    protected array $middlewareGroups = [];
 
     /**
      * The plugin's route middleware.
      *
      * @var array
      */
-    protected $routeMiddleware = [
-        // 'example' => \Azuriom\Plugin\AuthMe\Middleware\ExampleRouteMiddleware::class,
+    protected array $routeMiddleware = [
+        // 'example' => \Azuriom\Plugin\Authme\Middleware\ExampleRouteMiddleware::class,
     ];
 
     /**
@@ -36,7 +40,7 @@ class AuthMeServiceProvider extends BasePluginServiceProvider
      *
      * @var array
      */
-    protected $policies = [
+    protected array $policies = [
         // User::class => UserPolicy::class,
     ];
 
@@ -71,9 +75,18 @@ class AuthMeServiceProvider extends BasePluginServiceProvider
 
         $this->registerAdminNavigation();
 
-        $this->registerUserNavigation();
+	    $this->registerUserNavigation();
 
-        //
+ 	    //
+        Event::listen(function (Registered $event) {
+            $event->user->forceFill([
+            'authme_username' => strtolower($event->user->name)
+            ])->save();
+        });
+
+        
+        View::composer('profile.index', AuthmeViewCard::class);
+
     }
 
     /**
@@ -97,13 +110,14 @@ class AuthMeServiceProvider extends BasePluginServiceProvider
     {
         return [
             'authme'=>[
-                'name' => 'AuthMe',
+                'name' => trans('authme::admin.title'),
                 'type' => 'dropdown',
-                'icon' => 'fas fa-file-invoice-dollar',
+                'icon' => 'bi bi-shield-lock',
                 'items' => [
-                    'authme.admin.home' => 'AuthMe',
+                    'authme.admin.configure' => trans('authme::admin.configure.title'),
                 ],
             ]
+            //
         ];
     }
 
@@ -118,4 +132,5 @@ class AuthMeServiceProvider extends BasePluginServiceProvider
             //
         ];
     }
+    
 }

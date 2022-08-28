@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Plugin\AuthMe\Controllers\Admin;
+namespace Azuriom\Plugin\Authme\Controllers\Admin;
 
 use Azuriom\Http\Controllers\Controller;
 
@@ -14,5 +14,10 @@ class AdminController extends Controller
     public function index()
     {
         return view('authme::admin.index');
+    }
+
+    public function configure()
+    {
+        return view('authme::admin.configure');
     }
 }

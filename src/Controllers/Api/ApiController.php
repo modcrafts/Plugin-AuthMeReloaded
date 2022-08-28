@@ -1,6 +1,6 @@
 <?php
 
-namespace Azuriom\Plugin\AuthMe\Controllers\Api;
+namespace Azuriom\Plugin\Authme\Controllers\Api;
 
 use Azuriom\Http\Controllers\Controller;
 
