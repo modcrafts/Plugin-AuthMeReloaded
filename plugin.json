@@ -1,14 +1,16 @@
 {
     "id": "authme",
-    "name": "AuthMe",
-    "description": "Plugin for Azuriom",
-    "version": "1.0.0",
-    "url": "https://azuriom.com",
+    "name": "Authme Support",
+    "description": "Plugin for Authme Database",
+    "version": "1.0.1",
+    "url": "https://github.com/modcrafts/Azuriom-plugin-Authme",
     "authors": [
-        "Azuriom"
+        "Javdu10", 
+        "MODcraft"
     ],
+    "azuriom_api": "1.0.0",
     "providers": [
-        "\\Azuriom\\Plugin\\AuthMe\\Providers\\AuthMeServiceProvider",
-        "\\Azuriom\\Plugin\\AuthMe\\Providers\\RouteServiceProvider"
+        "\\Azuriom\\Plugin\\Authme\\Providers\\AuthmeServiceProvider",
+        "\\Azuriom\\Plugin\\Authme\\Providers\\RouteServiceProvider"
     ]
 }

@@ -1,5 +1,6 @@
 <?php
 
+use Azuriom\Plugin\Authme\Controllers\Api\ApiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'ApiController@index');
+Route::get('/', [ApiController::class, 'index']);

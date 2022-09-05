@@ -1,5 +1,6 @@
 <?php
 
+use Azuriom\Plugin\Authme\Controllers\Admin\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +15,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'AdminController@index')->name('home');
+//Route::get('/', [AdminController::class, 'index'])->name('home');
+Route::get('/configure', [AdminController::class, 'configure'])->name('configure');

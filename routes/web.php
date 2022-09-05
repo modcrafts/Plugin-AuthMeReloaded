@@ -1,5 +1,7 @@
 <?php
 
+use Azuriom\Plugin\Authme\Controllers\AuthmeHomeController;
+use Azuriom\Plugin\Authme\Controllers\SessionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +16,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'AuthMeHomeController@index');
+Route::get('/', [AuthmeHomeController::class, 'index']);
+
+Route::get('/click2login', [SessionController::class, 'click2login'])->middleware('auth')->name('click2login');
