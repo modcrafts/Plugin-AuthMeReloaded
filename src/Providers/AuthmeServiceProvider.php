@@ -6,6 +6,7 @@ use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
+use Illuminate\Auth\Events\Verified;
 use Azuriom\Plugin\Authme\Cards\AuthmeViewCard;
 
 class AuthmeServiceProvider extends BasePluginServiceProvider
@@ -84,6 +85,31 @@ class AuthmeServiceProvider extends BasePluginServiceProvider
             ])->save();
         });
 
+        Event::listen(function (Verified $event) {
+            $event->user->forceFill([
+            'authme_activated' => 1
+            ])->save();
+        });
+        
+        Event::listen('eloquent.updated: Azuriom\Models\User', function ($user) {
+            if ($user->email_verified_at == null && $user->authme_activated == 1) {
+                $user->forceFill([
+                'authme_activated' => 0
+                ])->save();
+            } elseif ($user->email_verified_at != null && $user->authme_activated == 0) {
+                $user->forceFill([
+                    'authme_activated' => 1
+                ])->save();
+            }
+
+            if ($user->deleted_at != null && $user->authme_username != null) {
+                $user->forceFill([
+                    'authme_activated' => null,
+                    'authme_username' => null
+                ])->save();
+            }
+            return true;
+        });
         
         View::composer('profile.index', AuthmeViewCard::class);
 

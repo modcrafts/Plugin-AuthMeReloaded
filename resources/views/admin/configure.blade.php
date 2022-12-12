@@ -47,7 +47,12 @@
                     mySQLlastlocYaw: authme_yaw <br>
                     mySQLlastlocPitch: authme_pitch <br>
                     mySQLPlayerUUID: game_id <br>
-                    <div style="white-space:pre">
+<div style="white-space:pre">
+ExternalBoardOptions:
+    mySQLColumnGroup: authme_activated
+    nonActivedUserGroup: 0
+</div>
+<div style="white-space:pre">
 settings: 
     security: 
         passwordHash: {{strtoupper(config('hashing.driver'))}} 
