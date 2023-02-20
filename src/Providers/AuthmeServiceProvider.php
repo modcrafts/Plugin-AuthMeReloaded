@@ -3,11 +3,11 @@
 namespace Azuriom\Plugin\Authme\Providers;
 
 use Azuriom\Extensions\Plugin\BasePluginServiceProvider;
-use Illuminate\Support\Facades\View;
-use Illuminate\Support\Facades\Event;
+use Azuriom\Plugin\Authme\Cards\AuthmeViewCard;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Events\Verified;
-use Azuriom\Plugin\Authme\Cards\AuthmeViewCard;
+use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\View;
 
 class AuthmeServiceProvider extends BasePluginServiceProvider
 {
@@ -76,43 +76,43 @@ class AuthmeServiceProvider extends BasePluginServiceProvider
 
         $this->registerAdminNavigation();
 
-	    $this->registerUserNavigation();
+        $this->registerUserNavigation();
 
- 	    //
+        //
         Event::listen(function (Registered $event) {
             $event->user->forceFill([
-            'authme_username' => strtolower($event->user->name)
+                'authme_username' => strtolower($event->user->name),
             ])->save();
         });
 
         Event::listen(function (Verified $event) {
             $event->user->forceFill([
-            'authme_activated' => 1
+                'authme_activated' => 1,
             ])->save();
         });
-        
+
         Event::listen('eloquent.updated: Azuriom\Models\User', function ($user) {
             if ($user->email_verified_at == null && $user->authme_activated == 1) {
                 $user->forceFill([
-                'authme_activated' => 0
+                    'authme_activated' => 0,
                 ])->save();
             } elseif ($user->email_verified_at != null && $user->authme_activated == 0) {
                 $user->forceFill([
-                    'authme_activated' => 1
+                    'authme_activated' => 1,
                 ])->save();
             }
 
             if ($user->deleted_at != null && $user->authme_username != null) {
                 $user->forceFill([
                     'authme_activated' => null,
-                    'authme_username' => null
+                    'authme_username'  => null,
                 ])->save();
             }
+
             return true;
         });
-        
-        View::composer('profile.index', AuthmeViewCard::class);
 
+        View::composer('profile.index', AuthmeViewCard::class);
     }
 
     /**
@@ -135,14 +135,14 @@ class AuthmeServiceProvider extends BasePluginServiceProvider
     protected function adminNavigation()
     {
         return [
-            'authme'=>[
-                'name' => trans('authme::admin.title'),
-                'type' => 'dropdown',
-                'icon' => 'bi bi-shield-lock',
+            'authme'=> [
+                'name'  => trans('authme::admin.title'),
+                'type'  => 'dropdown',
+                'icon'  => 'bi bi-shield-lock',
                 'items' => [
                     'authme.admin.configure' => trans('authme::admin.configure.title'),
                 ],
-            ]
+            ],
             //
         ];
     }
@@ -158,5 +158,4 @@ class AuthmeServiceProvider extends BasePluginServiceProvider
             //
         ];
     }
-    
 }
